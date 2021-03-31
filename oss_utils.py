@@ -64,7 +64,7 @@ class OssOperator(object):
 
     def uploadFile2Oss(self, file, objPath):  # 上传文件方法
         '''
-        分片上传方法
+        把文件对象上传oss
         :param file:  文件对象
         :param objPath: 上传到oss对应的文件名（路径）
         :return:
@@ -78,7 +78,7 @@ class OssOperator(object):
 
     def uploadFile2OssByPart(self, file, objPath):  # 分片上传方法
         '''
-        分片上传方法
+        把文件对象分片上传oss
         :param file:  文件对象
         :param objPath: 上传到oss对应的文件名（路径）
         :return:
@@ -120,7 +120,7 @@ class StsOssOperator(OssOperator):  # Sts服务，获取AccessKeyId和AccessKeyS
     '''
     使用Sts服务操作类，比OssOperator安全，可开放给前端使用，也可以后端使用
     '''
-    def __init__(self, OSS_OPTION):
+    def __init__(self, OSS_OPTION):  # 重写init方法
         # 获取AccessKeyId和AccessKeySecret和临时token
         accessKeyId = OSS_OPTION['AK_ID']
         accessKeySecret = OSS_OPTION['AK_SE']
@@ -142,9 +142,9 @@ class StsOssOperator(OssOperator):  # Sts服务，获取AccessKeyId和AccessKeyS
         self.AccessKeyId = self.token['Credentials']['AccessKeyId']
         self.AccessKeySecret = self.token['Credentials']['AccessKeySecret']
         self.SecurityToken = self.token['Credentials']['SecurityToken']
-        self._connectOss()
+        self._connectOss()  # 链接oss数据库
 
-    def getAccessToken(self):  # 返回AccessKeyId和AccessKeySecret和临时token等信息
+    def getAccessToken(self):  # 返回AccessKeyId和AccessKeySecret和临时token等信息，可提供给前端使用
         return self.AccessKeyId, self.AccessKeySecret, self.SecurityToken
 
     def _connectOss(self):  # 上传、下载操作先调用本方法，链接阿里云oss服务
